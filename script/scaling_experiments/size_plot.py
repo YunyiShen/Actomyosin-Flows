@@ -49,8 +49,8 @@ tmax = 600
 chi_thr = 0.2
 aspect_ratio = 1.0
 stress_max = 1000.0
-drag_range = [0, 0]
-visc_range = [10000, 10000]
+drag_range = [100000, 100000]
+visc_range = [500, 500]
 
 sizes = np.linspace(0.1/2, 1./2, num = 20)[3:]
 
@@ -64,6 +64,7 @@ for color, size_range in tqdm(zip(colors, [sizes[0], sizes[len(sizes)//2], sizes
     res_file = f"./simulations/{which_biology}/modelcell2D_Stokes_maxstress{stress_max}_drag{drag_range[0]}-{drag_range[1]}_size{cell_radius}_visc{visc_range[0]}-{visc_range[1]}_aspectratio{aspect_ratio}_dt{dt}_N{N}_tmax{tmax}.npz"
     if not os.path.exists(res_file):
         print(f"{res_file} does not exist")
+        
         continue
     
     simulation = np.load(res_file)
@@ -257,12 +258,13 @@ velnorm = []
 uslice = []
 vslice = []
 
-for cell_radius in tqdm(sizes):
+sizes_plot = []
+for i, cell_radius in tqdm(enumerate(sizes)):
     res_file = f"./simulations/{which_biology}/modelcell2D_Stokes_maxstress{stress_max}_drag{drag_range[0]}-{drag_range[1]}_size{cell_radius}_visc{visc_range[0]}-{visc_range[1]}_aspectratio{aspect_ratio}_dt{dt}_N{N}_tmax{tmax}.npz"
     if not os.path.exists(res_file):
         print(f"{res_file} does not exist")
         continue
-    
+    sizes_plot.append(cell_radius)
     simulation = np.load(res_file)
     u, v, p, stress_ext_save, t = simulation['u'], simulation['v'], simulation['p'], simulation['stress_ext']/1000, simulation['t']
     chi = simulation['chi']
@@ -289,14 +291,14 @@ for cell_radius in tqdm(sizes):
     
     velnorm.append(np.nanmax(np.linalg.norm(np.stack((u[-1], v[-1]), axis = 0), axis = 0)) * 1000 * 60)
 #breakpoint()  
-ax.scatter(sizes, velnorm)
-ax.plot(sizes, velnorm, label = "global")
+ax.scatter(sizes_plot, velnorm)
+ax.plot(sizes_plot, velnorm, label = "global")
 
-ax.scatter(sizes, uslice)
-ax.plot(sizes, uslice, label = "x slice")
+ax.scatter(sizes_plot, uslice)
+ax.plot(sizes_plot, uslice, label = "x slice")
 
-ax.scatter(sizes, vslice)
-ax.plot(sizes, vslice, label = "y slice")
+ax.scatter(sizes_plot, vslice)
+ax.plot(sizes_plot, vslice, label = "y slice")
 
 ax.legend()
 ax.set_xlabel('cell radius (mm)')

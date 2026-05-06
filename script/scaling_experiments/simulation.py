@@ -7,7 +7,7 @@ import os
 
 
 setups = []
-
+'''
 for stress in [ 1e3, 5e2, 1e2]:
     for cell_radius in np.linspace(0.1/2, 1./2, num = 20): 
         for visc_range in [
@@ -26,6 +26,7 @@ for stress in [ 1e3, 5e2, 1e2]:
                           "aspect_ratio": 1.0
                           })
 ##### 180 setups for size ####
+'''
 
 '''
 for stress in [ 1e3]:
@@ -64,7 +65,26 @@ for stress in [ 1e3, 5e2, 1e2]:
 # 100 setups
 '''
 
+for stress in [ 1e3, 5e2, 1e2]:
+    for cell_radius in np.linspace(0.1/2, 1./2, num = 20): 
+        for drag_range in [
+                           
+                           [100000, 100000],
+                           [200000, 200000],
+                           [300000, 300000]
+                           
+                           ]:
+            setups.append({"stress": stress, 
+                          "cell_radius": cell_radius,
+                          "visc_range": [500, 500], #visc_range,
+                          "drag_range": drag_range,
+                          "aspect_ratio": 1.0
+                          })
+##### 180 setups for size, and drag ####
+
+
 # geometry
+'''
 for stress in [ 1e3]:
     for cell_radius in [1./2]:
         for drag_range in [[0,0]]:
@@ -84,6 +104,8 @@ for stress in [ 1e3]:
                           "aspect_ratio": aspect_ratio
                           })
 # 9 settings
+'''
+
 
 
 
