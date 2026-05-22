@@ -45,7 +45,7 @@ actin = cortex2Dconc(R = 0.95*cell_radius, width = 0.02,  # depth of the surface
                              phase_rot = 0., timescale = tmax/2)
 
 ```
-
+Now we make the biology class and numerically solve the equation using the solver
 ```
 ### define biology
 biology = ActinModel(actin = actin,
