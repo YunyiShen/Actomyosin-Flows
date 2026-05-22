@@ -7,19 +7,16 @@ import scipy.io
 
 setups = []
 
-'''
+
 #exploding and literature settings
 for stress in [ 1e3, 2e3, 5e3, 5e2, 1e2]:
     for cell_radius in [1./2]:
         for drag_range in [[0,0], [3.e4, 1.e6], [3.e5, 1.e7]]:
             for visc_range in [
-                            
+                           [8000, 40000] # this is a literature value
                            [5, 20],
                            [50, 200],
                            [4000, 20000],
-                           [8000, 40000] # this is a literature value
-                           
-                           
                            ]:
                 setups.append({"stress": stress, 
                           "cell_radius": cell_radius,
@@ -28,7 +25,7 @@ for stress in [ 1e3, 2e3, 5e3, 5e2, 1e2]:
                           "aspect_ratio": 1.0
                           })
 # in total 45
-'''
+
 
 
 
@@ -137,6 +134,7 @@ for stress in [ 1e3, 2e3, 5e3, 5e2, 1e2]:
 '''
 
 # geometry
+'''
 for stress in [ 1e3, 2e3, 5e3]:
     for cell_radius in [1./2]:
         for drag_range in [[0,0]]:
@@ -169,6 +167,7 @@ for stress in [ 1e3, 2e3, 5e3]:
                           })
 
 #### 96 settings ####
+'''
 
 def run(run_id, dx = None, tmax = 10, dt = None, N = 51, Stokes = False):
     # N determines number of girds
